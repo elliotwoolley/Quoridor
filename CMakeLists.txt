@@ -6,23 +6,22 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Ofast")
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Ofast -fsanitize=address,undefined -fstack-protector-all")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-
-add_executable(Quoridor main.c
-        move_generation.c
-        move_generation.h
-        state.h
-        evaluate.c
-        evaluate.h
-        state.c
-        move.c
-        move.h
-        search.c
-        search.h
-        bitboards.c
-        bitboards.h
-        game_manager.h
-        game_manager.c
+add_executable(Quoridor
+        src/main.c
+        src/move_generation.c
+        src/move_generation.h
+        src/state.h
+        src/evaluate.c
+        src/evaluate.h
+        src/state.c
+        src/move.c
+        src/move.h
+        src/search.c
+        src/search.h
+        src/bitboards.c
+        src/bitboards.h
+        src/game_manager.h
+        src/game_manager.c
 )
 
 
