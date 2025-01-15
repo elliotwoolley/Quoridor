@@ -5,9 +5,9 @@
 
 
 FenceMove create_fence_move(int row, int col) {
-    assert(0 <= row && row < GAME_BOARD_MAX_INDEX);
-    assert(0 <= col && col < GAME_BOARD_MAX_INDEX);
-    return square64(row * GAME_BOARD_MAX_INDEX + col);
+    assert(0 <= row && row < FENCE_BIT_BOARD_WIDTH);
+    assert(0 <= col && col < FENCE_BIT_BOARD_WIDTH);
+    return square64(row * FENCE_BIT_BOARD_WIDTH + col);
 }
 
 char* move_type_to_string(enum MoveType move_type) {

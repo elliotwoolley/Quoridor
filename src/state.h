@@ -5,8 +5,8 @@
 #include <stdbool.h>
 #include "move.h"
 
-#define GAME_BOARD_SIZE 9
-#define GAME_BOARD_MAX_INDEX (GAME_BOARD_SIZE - 1)  // TODO : Rename
+#define BOARD_SIZE 9
+#define FENCE_BIT_BOARD_WIDTH (BOARD_SIZE - 1)
 #define square64(index) ((uint64_t) 1 << (index))
 #define square128(index) (((__uint128_t) 1) << (index))
 
@@ -22,7 +22,7 @@
 #define NO_PATH_FOUND 0
 
 #define player_1_win_check(state)  ((state).player_1_row == 0)
-#define player_2_win_check(state)  ((state).player_2_row == GAME_BOARD_MAX_INDEX)
+#define player_2_win_check(state)  ((state).player_2_row == BOARD_SIZE - 1)
 
 struct State {
     uint64_t vertical_fences;

@@ -6,7 +6,7 @@ FenceMoves generate_pseudo_legal_vertical_fence_moves(struct State state) {
     if (state.player_to_move == 1 && state.player_1_fence_count > 0 ||
         state.player_to_move == 2 && state.player_2_fence_count > 0) {
 
-        return ~(state.vertical_fences | state.vertical_fences << GAME_BOARD_MAX_INDEX | state.vertical_fences >> GAME_BOARD_MAX_INDEX |
+        return ~(state.vertical_fences | state.vertical_fences << FENCE_BIT_BOARD_WIDTH | state.vertical_fences >> FENCE_BIT_BOARD_WIDTH |
                  state.horizontal_fences);
     }
 
@@ -120,32 +120,3 @@ PawnMoves generate_legal_pawn_moves(struct State state) {
     }
     return pawnMoves;
 }
-
-//int main() {
-//    printf("wowee\n");
-//
-//    struct state state;
-//    init_state(&state);
-//
-//    __uint128_t board = (one_128 << 108);
-////    __uint128_t board = (one_128 << 108);
-//    uint64_t vertical_fences = 0;
-////    uint64_t horizontal_fences = 0;
-//    uint64_t horizontal_fences = (1ull << 63) | (1ull << 61) | (1ull << 59) | (1ull << 57) | (1ull << 54) |
-//                                 (1ull << 52) | (1ull << 50) | (1ull << 48) | (1ull << 47) | (1ull << 45) |
-//                                 (1ull << 43) | (1ull << 41) | (1ull << 38) | (1ull << 36) | (1ull << 34) |
-//                                 (1ull << 32) | (1ull << 31) | (1ull << 29) | (1ull << 27) | (1ull << 25);
-//
-//    state.horizontal_fences = horizontal_fences;
-//
-//
-//    volatile uint64_t result = 0;
-//
-//    float start = (float) clock() / CLOCKS_PER_SEC;
-//    for (int i = 0; i < 1000000000; i++) {
-//        result += generate_horizontal_fence_moves(state);
-//    }
-//    float end = (float) clock() / CLOCKS_PER_SEC;
-//    printf("%llu\n\n", result);
-//    printf("%f seconds\n", end - start);
-//}

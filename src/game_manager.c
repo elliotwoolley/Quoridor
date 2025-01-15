@@ -87,7 +87,7 @@ static struct Move get_move_from_user(struct State *state) {
                 continue;
             }
 
-            if (row < 0 || row >= GAME_BOARD_MAX_INDEX || col < 0 || col >= GAME_BOARD_MAX_INDEX) {
+            if (row < 0 || row >= FENCE_BIT_BOARD_WIDTH || col < 0 || col >= FENCE_BIT_BOARD_WIDTH) {
                 printf("Row or col out of range. Try again.\n");
                 continue;
             }
@@ -110,7 +110,7 @@ static struct Move get_move_from_user(struct State *state) {
                 continue;
             }
 
-            if (row < 0 || row >= GAME_BOARD_MAX_INDEX || col < 0 || col >= GAME_BOARD_MAX_INDEX) {
+            if (row < 0 || row >= FENCE_BIT_BOARD_WIDTH || col < 0 || col >= FENCE_BIT_BOARD_WIDTH) {
                 printf("Row or col out of range. Try again.\n");
                 continue;
             }

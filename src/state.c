@@ -11,10 +11,10 @@ struct State new_state() {
     return (struct State) {
         .vertical_fences = 0,
         .horizontal_fences = 0,
-        .player_1_row = GAME_BOARD_MAX_INDEX,
-        .player_1_col = GAME_BOARD_MAX_INDEX / 2,
+        .player_1_row = BOARD_SIZE - 1,
+        .player_1_col = (BOARD_SIZE - 1) / 2,
         .player_2_row = 0,
-        .player_2_col = GAME_BOARD_MAX_INDEX / 2,
+        .player_2_col = (BOARD_SIZE - 1) / 2,
         .player_1_fence_count = 10,
         .player_2_fence_count = 10,
         .player_to_move = 1,
@@ -29,14 +29,14 @@ void print_state(struct State state) {
     printf("\n");
     printf("   ");
 
-    for (col = 0; col < GAME_BOARD_MAX_INDEX; col++) {
+    for (col = 0; col < BOARD_SIZE - 1; col++) {
         wprintf(L"  %d  %lc", col, (wchar_t) 0x2080 + col);
     }
     printf("  %d", col);
     printf("\n");
-    for (row = 0; row < GAME_BOARD_MAX_INDEX + 1; row++) {
+    for (row = 0; row < BOARD_SIZE; row++) {
         printf(" %d ", row);
-        for (col = 0; col < GAME_BOARD_MAX_INDEX + 1; col++) {  //  Prints Board Row
+        for (col = 0; col < BOARD_SIZE; col++) {  //  Prints Board Row
             if (state.player_1_col == col && state.player_1_row == row) {  //  Player 1
                 printf("  X  ");
             } else if (state.player_2_col == col && state.player_2_row == row) {  //  Player 2
@@ -44,8 +44,8 @@ void print_state(struct State state) {
             } else {  //  No Pawns
                 printf("  •  ");
             }
-            if (col < GAME_BOARD_MAX_INDEX) {  //  Prints Vertical Fences
-                if (row < GAME_BOARD_MAX_INDEX && (state.vertical_fences & (square64(8 * row + col))) ||
+            if (col < BOARD_SIZE - 1) {  //  Prints Vertical Fences
+                if (row < BOARD_SIZE - 1 && (state.vertical_fences & (square64(8 * row + col))) ||
                     row > 0 && (state.vertical_fences & square64(8 * (row - 1) + col))) {
                     printf("|");
                 } else {
@@ -53,9 +53,9 @@ void print_state(struct State state) {
                 }
             }
         }
-        if (row < GAME_BOARD_MAX_INDEX) {  //  Prints in between Board Rows
+        if (row < BOARD_SIZE - 1) {  //  Prints in between Board Rows
             wprintf(L"\n  %lc ", (wchar_t) 0x2080 + row);
-            for (col = 0; col < GAME_BOARD_MAX_INDEX; col++) {
+            for (col = 0; col < BOARD_SIZE - 1; col++) {
                 if (state.horizontal_fences & (square64(8 * row + col))) {
                     printf("---");
                     printf("---");
@@ -198,7 +198,7 @@ void make_pawn_move(struct State *state, PawnMove move) {
                 assert(false && "make_pawn_move: Unrecognized pawn move.");
         }
         assert(state->player_1_row >= 0);
-        assert(state->player_1_col <= GAME_BOARD_MAX_INDEX);
+        assert(state->player_1_col <= BOARD_SIZE - 1);
     } else {
         state->player_to_move = 1;
         switch (move) {
@@ -246,7 +246,7 @@ void make_pawn_move(struct State *state, PawnMove move) {
                 assert(false && "make_pawn_move: Unrecognized pawn move.");
         }
         assert(state->player_2_row >= 0);
-        assert(state->player_2_col <= GAME_BOARD_MAX_INDEX);
+        assert(state->player_2_col <= BOARD_SIZE - 1);
     }
 }
 
@@ -298,7 +298,7 @@ void unmake_pawn_move(struct State *state, PawnMove move) {
                 assert(false && "unmake_pawn_move: Unrecognized pawn move.");
         }
         assert(state->player_1_row >= 0);
-        assert(state->player_1_col <= GAME_BOARD_MAX_INDEX);
+        assert(state->player_1_col <= BOARD_SIZE - 1);
     } else {
         state->player_to_move = 2;
         switch (move) {
@@ -346,7 +346,7 @@ void unmake_pawn_move(struct State *state, PawnMove move) {
                 assert(false && "unmake_pawn_move: Unrecognized pawn move.");
         }
         assert(state->player_2_row >= 0);
-        assert(state->player_2_col <= GAME_BOARD_MAX_INDEX);
+        assert(state->player_2_col <= BOARD_SIZE - 1);
     }
 }
 
