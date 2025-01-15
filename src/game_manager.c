@@ -4,27 +4,73 @@
 #include <assert.h>
 
 #include "game_manager.h"
-#include "move_generation.h"   // generate_pawn_moves, generate_fence_moves, ...
-#include "search.h"            // get_best_move_iterative_deepening(...)
-#include "evaluate.h"          // evaluate(...)
-#include "state.h"             // new_state(), make_move(), unmake_move(), ...
-#include "move.h"              // struct Move, MoveType
+#include "move_generation.h"
+#include "search.h"
+#include "state.h"
+#include "move.h"
 
-/**
- * Helper function: Prompt a human for a move, parse it, and return it.
- *
- * You can customize:
- *  - the text prompts
- *  - the exact input format
- *  - how you handle errors or invalid moves
- */
-static struct Move get_move_from_user(struct State *state) {
-    // In Quoridor, there are basically two categories of moves:
-    //  1) Pawn move (single-step, jump, diagonal jump)
-    //  2) Fence move (horizontal or vertical)
+enum PlayerType {
+    Human,
+    AI,
+};
 
+struct Player {
+    enum PlayerType type;
+    int difficulty;
+};
+
+
+struct Player get_player_info(int player_number) {
     while (true) {
-        // Print a prompt
+        printf("\n===== Player %d =====\n", player_number);
+        printf("Select player type (H = Human, A = AI): ");
+
+        char line[64];
+        if (!fgets(line, sizeof(line), stdin)) {
+            fprintf(stderr, "Error reading input. Try again.\n");
+            continue;
+        }
+
+        char choice = '\0';
+        if (sscanf(line, " %c", &choice) != 1) {
+            printf("Invalid input. Try again.\n");
+            continue;
+        }
+
+        if (choice == 'H' || choice == 'h') {
+            return (struct Player) { .type = Human, .difficulty = 0 };
+        }
+
+        if (choice == 'A' || choice == 'a') {
+            while (true) {
+                printf("Enter AI difficulty (1 to 6): ");
+
+                if (!fgets(line, sizeof(line), stdin)) {
+                    fprintf(stderr, "Error reading input. Try again.\n");
+                    continue;
+                }
+
+                int difficulty;
+                if (sscanf(line, "%d", &difficulty) != 1) {
+                    printf("Invalid integer. Try again.\n");
+                    continue;
+                }
+
+                if (difficulty < 1 || difficulty > 6) {
+                    printf("Difficulty must be between 1 and 6. Try again.\n");
+                    continue;
+                }
+
+                return (struct Player) { .type = AI, .difficulty = difficulty };
+            }
+        }
+
+        printf("Invalid input. Try again.\n");
+    }
+}
+
+struct Move get_move_from_user(struct State *state) {
+    while (true) {
         printf("Enter move [P for pawn, HF for horizontal fence, VF for vertical fence, AI for letting the AI decide].\n");
         printf(" Example inputs:\n");
         printf("   P N     (move pawn North)\n");
@@ -92,7 +138,8 @@ static struct Move get_move_from_user(struct State *state) {
                 continue;
             }
 
-            struct Move move = (struct Move) { .moveType = HorizontalFence, .move.fenceMove = create_fence_move(row, col) };
+            struct Move move = (struct Move) { .moveType = HorizontalFence, .move.fenceMove = create_fence_move(row,
+                                                                                                                col) };
 
             if (!move_is_fully_legal(state, move)) {
                 printf("Move is not legal. Try again.\n");
@@ -115,7 +162,8 @@ static struct Move get_move_from_user(struct State *state) {
                 continue;
             }
 
-            struct Move move = (struct Move) { .moveType = VerticalFence, .move.fenceMove = create_fence_move(row, col) };
+            struct Move move = (struct Move) { .moveType = VerticalFence, .move.fenceMove = create_fence_move(row,
+                                                                                                              col) };
 
             if (!move_is_fully_legal(state, move)) {
                 printf("Move is not legal. Try again.\n");
@@ -156,9 +204,9 @@ static struct Move get_move_from_user(struct State *state) {
  *  - For Human: prompts for move from stdin.
  *  - For AI: calls get_best_move_iterative_deepening(...)
  */
-void run_game(struct Player p1, struct Player p2) {
-    assert(p1.type == Human || p1.difficulty > 0);
-    assert(p2.type == Human || p2.difficulty > 0);
+void run_game() {
+    struct Player p1 = get_player_info(1);
+    struct Player p2 = get_player_info(2);
 
     struct State state = new_state();
 
