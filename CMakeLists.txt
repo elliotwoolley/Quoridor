@@ -4,23 +4,23 @@ project(Quoridor C)
 set(CMAKE_C_STANDARD 17)
 
 add_executable(Quoridor
-        src/main.c
-        src/move_generation.c
-        src/move_generation.h
-        src/state.h
-        src/evaluate.c
-        src/evaluate.h
-        src/state.c
-        src/move.c
-        src/move.h
-        src/search.c
-        src/search.h
-        src/bitboards.c
-        src/bitboards.h
-        src/game_manager.h
-        src/game_manager.c
-        src/wasm_util.h
-        src/wasm_util.c
+        src/c/main.c
+        src/c/move_generation.c
+        src/c/move_generation.h
+        src/c/state.h
+        src/c/evaluate.c
+        src/c/evaluate.h
+        src/c/state.c
+        src/c/move.c
+        src/c/move.h
+        src/c/search.c
+        src/c/search.h
+        src/c/bitboards.c
+        src/c/bitboards.h
+        src/c/game_manager.h
+        src/c/game_manager.c
+        src/c/wasm_util.h
+        src/c/wasm_util.c
 )
 
 if (DEFINED EMSCRIPTEN)
