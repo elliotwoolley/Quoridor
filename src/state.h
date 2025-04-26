@@ -7,6 +7,10 @@
 
 #define BOARD_SIZE 9
 #define FENCE_BIT_BOARD_WIDTH (BOARD_SIZE - 1)
+
+#define RIGHT_FENCE_MASK 0b1000000010000000100000001000000010000000100000001000000010000000
+#define LEFT_FENCE_MASK  0b0000000100000001000000010000000100000001000000010000000100000001
+
 #define square64(index) ((uint64_t) 1 << (index))
 #define square128(index) (((__uint128_t) 1) << (index))
 
@@ -54,10 +58,12 @@ void make_pawn_move(struct State *state, PawnMove move);
 
 void unmake_pawn_move(struct State *state, PawnMove move);
 
-void make_move(struct State *state, struct Move move);
+void make_move(struct State *state, struct Move *move);
 
-void unmake_move(struct State *state, struct Move move);
+void unmake_move(struct State *state, struct Move *move);
 
 bool move_is_fully_legal(struct State *state, struct Move move);
+
+bool win_check(struct State *state);
 
 #endif //QUORIDOR_STATE_H

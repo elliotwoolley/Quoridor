@@ -56,7 +56,8 @@ bool search(struct State *state, struct Move move, int depth, int *alpha, const 
  * @param beta The upper bound for the search window.
  * @param pv_move A pointer to an array of moves representing the current principal variation.
  * @param best_line A pointer to an array of moves where the best sequence of moves will be stored.
- */void principal_variation_search(struct State state, int depth, int alpha, int beta, // NOLINT(*-no-recursion)
+ */
+ void principal_variation_search(struct State state, int depth, int alpha, int beta, // NOLINT(*-no-recursion)
                                    struct Move *pv_move,
                                    struct Move best_line[]) {
 
@@ -87,7 +88,7 @@ bool search(struct State *state, struct Move move, int depth, int *alpha, const 
             (pv_move->moveType == HorizontalFence && pv_move->move.fenceMove & horizontal_fence_moves);
 
     if (pv_move_is_legal) {
-        make_move(&state, *pv_move);
+        make_move(&state, pv_move);
 
         if (evaluate(state) != NO_PATH_FOUND) {
             struct Move child_best_move_list[depth];
@@ -111,7 +112,7 @@ bool search(struct State *state, struct Move move, int depth, int *alpha, const 
 
         }
 
-        unmake_move(&state, *pv_move);
+        unmake_move(&state, pv_move);
     }
 
     pv_move++;
@@ -199,7 +200,7 @@ bool search(struct State *state, const struct Move move, const int depth, int *a
     int score = -child_line[0].score;
 
     // If we found a move that beats alpha but is still less than beta,
-    // we need a full re-search to improve accuracy.
+    // we need a full re-search.
     if (score > *alpha && score < *beta) {
         principal_variation_search(*state, depth - 1, -(*beta), -(*alpha), pv_move, child_line);
         score = -child_line[0].score;

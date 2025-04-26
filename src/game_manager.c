@@ -244,7 +244,7 @@ void run_game() {
                 assert(false && "Invalid Player.type value");
         }
 
-        make_move(&state, move);
+        make_move(&state, &move);
     }
 
     printf("\n====================\n");

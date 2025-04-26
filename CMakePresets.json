@@ -1,0 +1,70 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "base",
+      "binaryDir": "${sourceDir}/build/build-${presetName}",
+      "hidden": true
+    },
+    {
+      "name": "emscripten",
+      "inherits": [
+        "base"
+      ],
+      "toolchainFile": "${sourceDir}/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+      "hidden": true
+    },
+    {
+      "name": "debug",
+      "inherits": [
+        "base"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_FLAGS_DEBUG": "-g -fsanitize=address,undefined -fstack-protector-all"
+      }
+    },
+    {
+      "name": "release",
+      "inherits": [
+        "base"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "emscripten-debug",
+      "inherits": [
+        "emscripten",
+        "debug"
+      ]
+    },
+    {
+      "name": "emscripten-release",
+      "inherits": [
+        "emscripten",
+        "release"
+      ]
+    }
+  ],
+  "buildPresets": [
+
+    {
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
+    },
+    {
+      "name": "emscripten-debug",
+      "configurePreset": "emscripten-debug"
+    },
+    {
+      "name": "emscripten-release",
+      "configurePreset": "emscripten-release"
+    }
+  ]
+}

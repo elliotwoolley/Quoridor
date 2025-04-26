@@ -25,9 +25,25 @@ FenceMoves generate_pseudo_legal_horizontal_fence_moves(struct State state);
 
 /**
  * @param state The game state.
- * @return A bitmask (`PawnMoves`) of valid pawn moves (`PawnMove`).
+ * @return A bitmask (`PawnMoves`) of legal pawn moves (`PawnMove`).
  */
 PawnMoves generate_legal_pawn_moves(struct State state);
+
+/**
+ * Returns a bitmask of legal vertical fence moves for the current player.
+ *
+ * @param state The game state.
+ * @return A bitmask (`FenceMoves`) of legal vertical fence positions.
+ */
+FenceMoves generate_fully_legal_vertical_fence_moves(struct State state);
+
+/**
+ * Returns a bitmask of legal horizontal fence moves for the current player.
+ *
+ * @param state The game state.
+ * @return A bitmask (`FenceMoves`) of legal horizontal fence positions.
+ */
+FenceMoves generate_fully_legal_horizontal_fence_moves(struct State state);
 
 
 #endif //QUORIDOR_MOVE_GENERATION_H

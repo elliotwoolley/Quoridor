@@ -1,4 +1,4 @@
-#include <printf.h>
+#include <stdio.h>
 #include <assert.h>
 #include "move.h"
 #include "state.h"

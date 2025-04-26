@@ -1,13 +1,15 @@
 #include <assert.h>
+#include <stdio.h>
 #include "move_generation.h"
 #include "bitboards.h"
+#include "evaluate.h"
 
 FenceMoves generate_pseudo_legal_vertical_fence_moves(struct State state) {
     if (state.player_to_move == 1 && state.player_1_fence_count > 0 ||
         state.player_to_move == 2 && state.player_2_fence_count > 0) {
 
-        return ~(state.vertical_fences | state.vertical_fences << FENCE_BIT_BOARD_WIDTH | state.vertical_fences >> FENCE_BIT_BOARD_WIDTH |
-                 state.horizontal_fences);
+        return ~(state.vertical_fences | state.vertical_fences << FENCE_BIT_BOARD_WIDTH |
+                 state.vertical_fences >> FENCE_BIT_BOARD_WIDTH | state.horizontal_fences);
     }
 
     return 0;
@@ -18,8 +20,8 @@ FenceMoves generate_pseudo_legal_horizontal_fence_moves(struct State state) {
     if (state.player_to_move == 1 && state.player_1_fence_count > 0 ||
         state.player_to_move == 2 && state.player_2_fence_count > 0) {
 
-        return ~(state.horizontal_fences | state.horizontal_fences << 1 | state.horizontal_fences >> 1 |
-                 state.vertical_fences);
+        return ~(state.horizontal_fences | (state.horizontal_fences & ~RIGHT_FENCE_MASK) << 1 |
+                 (state.horizontal_fences & ~LEFT_FENCE_MASK) >> 1 | state.vertical_fences);
     }
 
     return 0;
@@ -119,4 +121,42 @@ PawnMoves generate_legal_pawn_moves(struct State state) {
         }
     }
     return pawnMoves;
+}
+
+FenceMoves generate_fully_legal_vertical_fence_moves(struct State state) {
+    FenceMoves legal_moves = 0;
+    FenceMoves pseudo_legal_moves = generate_pseudo_legal_vertical_fence_moves(state);
+
+    while (pseudo_legal_moves != 0) {
+        FenceMove move = square64(__builtin_ctzll(pseudo_legal_moves));
+        pseudo_legal_moves &= pseudo_legal_moves - 1;
+        make_vertical_fence_move(&state, move);
+
+        if (evaluate(state) != NO_PATH_FOUND) {
+            legal_moves |= move;
+        }
+
+        unmake_vertical_fence_move(&state, move);
+    }
+
+    return legal_moves;
+}
+
+FenceMoves generate_fully_legal_horizontal_fence_moves(struct State state) {
+    FenceMoves legal_moves = 0;
+    FenceMoves pseudo_legal_moves = generate_pseudo_legal_horizontal_fence_moves(state);
+
+    while (pseudo_legal_moves != 0) {
+        FenceMove move = square64(__builtin_ctzll(pseudo_legal_moves));
+        pseudo_legal_moves &= pseudo_legal_moves - 1;
+        make_horizontal_fence_move(&state, move);
+
+        if (evaluate(state) != NO_PATH_FOUND) {
+            legal_moves |= move;
+        }
+
+        unmake_horizontal_fence_move(&state, move);
+    }
+
+    return legal_moves;
 }

@@ -1,6 +1,7 @@
 #include <wchar.h>
 #include <assert.h>
 #include <locale.h>
+#include <stdio.h>
 #include "state.h"
 #include "move_generation.h"
 #include "evaluate.h"
@@ -9,15 +10,15 @@
 
 struct State new_state() {
     return (struct State) {
-        .vertical_fences = 0,
-        .horizontal_fences = 0,
-        .player_1_row = BOARD_SIZE - 1,
-        .player_1_col = (BOARD_SIZE - 1) / 2,
-        .player_2_row = 0,
-        .player_2_col = (BOARD_SIZE - 1) / 2,
-        .player_1_fence_count = 10,
-        .player_2_fence_count = 10,
-        .player_to_move = 1,
+            .vertical_fences = 0,
+            .horizontal_fences = 0,
+            .player_1_row = BOARD_SIZE - 1,
+            .player_1_col = (BOARD_SIZE - 1) / 2,
+            .player_2_row = 0,
+            .player_2_col = (BOARD_SIZE - 1) / 2,
+            .player_1_fence_count = 10,
+            .player_2_fence_count = 10,
+            .player_to_move = 1,
     };
 }
 
@@ -350,38 +351,38 @@ void unmake_pawn_move(struct State *state, PawnMove move) {
     }
 }
 
-void make_move(struct State *state, struct Move move) {
-    switch (move.moveType) {
+void make_move(struct State *state, struct Move *move) {
+    switch (move->moveType) {
         case VerticalFence:
-            make_vertical_fence_move(state, move.move.fenceMove);
+            make_vertical_fence_move(state, move->move.fenceMove);
             break;
         case HorizontalFence:
-            make_horizontal_fence_move(state, move.move.fenceMove);
+            make_horizontal_fence_move(state, move->move.fenceMove);
             break;
         case Pawn:
-            make_pawn_move(state, move.move.pawnMove);
+            make_pawn_move(state, move->move.pawnMove);
             break;
         case None:
-            assert(move.moveType != None);
+            assert(move->moveType != None);
             break;
         default:
             assert(false && "make_move: Illegal move.moveType.");
     }
 }
 
-void unmake_move(struct State *state, struct Move move) {
-    switch (move.moveType) {
+void unmake_move(struct State *state, struct Move *move) {
+    switch (move->moveType) {
         case VerticalFence:
-            unmake_vertical_fence_move(state, move.move.fenceMove);
+            unmake_vertical_fence_move(state, move->move.fenceMove);
             break;
         case HorizontalFence:
-            unmake_horizontal_fence_move(state, move.move.fenceMove);
+            unmake_horizontal_fence_move(state, move->move.fenceMove);
             break;
         case Pawn:
-            unmake_pawn_move(state, move.move.pawnMove);
+            unmake_pawn_move(state, move->move.pawnMove);
             break;
         case None:
-            assert(move.moveType != None);
+            assert(move->moveType != None);
             break;
         default:
             assert(false && "unmake_move: Illegal move.moveType.");
@@ -422,4 +423,8 @@ bool move_is_fully_legal(struct State *state, struct Move move) {
         default:
             assert(false && "unmake_move: Illegal move.moveType.");
     }
+}
+
+bool win_check(struct State *state) {
+    return player_1_win_check(*state) || player_2_win_check(*state);
 }
