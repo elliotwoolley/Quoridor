@@ -1,6 +1,0 @@
-#ifndef QUORIDOR_GAME_MANAGER_H
-#define QUORIDOR_GAME_MANAGER_H
-
-void run_game();
-
-#endif //QUORIDOR_GAME_MANAGER_H
