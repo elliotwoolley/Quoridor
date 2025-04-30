@@ -1,0 +1,35 @@
+{
+  "name": "quoridor",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run 'build wasm debug' && npm run 'copy wasm debug' && vite",
+    "build": "npm run 'build wasm release' && npm run 'copy wasm release' && tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "build then preview": "npm run build && npm run preview",
+    "build wasm debug": "cmake --build --target Quoridor --preset emscripten-debug",
+    "build wasm release": "cmake --build --target Quoridor --preset emscripten-release",
+    "copy wasm debug": "cp ./build/cmake-build-emscripten-debug/Quoridor.js ./src/wasm && cp ./build/cmake-build-emscripten-debug/Quoridor.wasm ./src/wasm && cp ./build/cmake-build-emscripten-debug/Quoridor.wasm ./public",
+    "copy wasm release": "cp ./build/cmake-build-emscripten-release/Quoridor.js ./src/wasm && cp ./build/cmake-build-emscripten-release/Quoridor.wasm ./src/wasm && cp ./build/cmake-build-emscripten-release/Quoridor.wasm ./public"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/node": "^22.15.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.11.0",
+    "sass": "^1.86.3",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.11.0",
+    "vite": "^6.2.4"
+  }
+}
