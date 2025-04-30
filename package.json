@@ -8,8 +8,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "build then preview": "npm run build && npm run preview",
-    "build wasm debug": "cmake --build --target Quoridor --preset emscripten-debug",
-    "build wasm release": "cmake --build --target Quoridor --preset emscripten-release",
+    "build wasm debug": "cmake --preset emscripten-debug && cmake --build --target Quoridor --preset emscripten-debug",
+    "build wasm release": "cmake --preset emscripten-release && cmake --build --target Quoridor --preset emscripten-release",
     "copy wasm debug": "cp ./build/cmake-build-emscripten-debug/Quoridor.js ./src/wasm && cp ./build/cmake-build-emscripten-debug/Quoridor.wasm ./src/wasm && cp ./build/cmake-build-emscripten-debug/Quoridor.wasm ./public",
     "copy wasm release": "cp ./build/cmake-build-emscripten-release/Quoridor.js ./src/wasm && cp ./build/cmake-build-emscripten-release/Quoridor.wasm ./src/wasm && cp ./build/cmake-build-emscripten-release/Quoridor.wasm ./public"
   },
