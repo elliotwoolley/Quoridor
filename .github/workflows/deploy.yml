@@ -14,6 +14,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Setup Emscripten
+        run: |
+          chmod +x ./emscripten_setup.sh
+          ./emscripten_setup.sh
+
       - name: Setup Node
         uses: actions/setup-node@v4
 
