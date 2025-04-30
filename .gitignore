@@ -44,6 +44,7 @@
 
 # Kernel Module Compile Results
 *.mod*
+!*.module.scss
 *.cmd
 .tmp_versions/
 modules.order

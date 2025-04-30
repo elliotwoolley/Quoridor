@@ -1,0 +1,19 @@
+.themeToggleButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+
+  position: absolute;
+  right: 20px;
+  top: 20px;
+
+  &:hover {
+    background-color: var(--shadow-color-1);
+  }
+}

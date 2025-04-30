@@ -1,0 +1,40 @@
+.boardSquare {
+  background-color: var(--square-bg);
+  border-radius: 10%;
+  box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &.legal {
+    &:hover {
+      background-color: var(--square-bg-hover);
+      box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.25);
+
+      .moveIndicator {
+        background-color: var(--shadow-color-2);
+      }
+    }
+  }
+
+  .moveIndicator {
+    border-radius: 50%;
+    width: 25%;
+    height: 25%;
+    background-color: var(--shadow-color-4);
+  }
+
+  @for $i from 0 through 8 {
+    .row-#{$i} {
+      grid-row: (2 * $i) + 1;
+    }
+  }
+
+  @for $j from 0 through 8 {
+    .col-#{$j} {
+      grid-column: (2 * $j) + 1;
+    }
+  }
+}
