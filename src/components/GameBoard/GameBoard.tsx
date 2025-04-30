@@ -65,7 +65,7 @@ const GameBoard: React.FC<BoardGameProps> = ({ player1, player2 }) => {
         const currentPlayer = gameState.playerToMove === 1 ? player1State : player2State;
 
         if (currentPlayer.type === "AI" && !aiIsThinking && moveIndex === moveList.length - 1) {
-            const worker = new Worker(new URL("../../workers/aiWorker.ts", import.meta.url), { type: "module" });
+            const worker = new Worker(new URL("../../workers/AiWorker.ts", import.meta.url), { type: "module" });
             setAiIsThinking(true);
 
             worker.postMessage({
