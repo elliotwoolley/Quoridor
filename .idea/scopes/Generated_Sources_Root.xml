@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Generated Sources Root" pattern="file[quoridor]:src/wasm//*" />
+</component>
