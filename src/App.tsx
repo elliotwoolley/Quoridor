@@ -6,11 +6,11 @@ import ThemeToggleButton from "./components/ThemeToggleButton/ThemeToggleButton.
 export default function App() {
 
     const [theme, setTheme] = useState(() => {
-        return localStorage.getItem('theme') ?? 'dark-mode';
+        return localStorage.getItem("theme") ?? "dark-mode";
     });
 
     function updateTheme(theme: string) {
-        localStorage.setItem('theme', theme);
+        localStorage.setItem("theme", theme);
         setTheme(theme);
     }
 
