@@ -262,9 +262,5 @@ struct Move get_best_move_iterative_deepening(struct State state, const int dept
         memcpy(current_line, best_line, sizeof(struct Move) * (d + 1));
     }
 
-    for (int i = 0; i < depth; i++) {
-        print_move(current_line[i]);
-    }
-
     return current_line[0];
 }
