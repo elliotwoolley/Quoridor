@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "npm run 'build wasm debug' && npm run 'copy wasm debug' && vite",
-    "build": "npm run 'build wasm release' && npm run 'copy wasm release' && tsc -b && vite build",
+    "dev": "npm run build:wasm:debug && npm run copy:wasm:debug && vite",
+    "build": "npm run build:wasm:release && npm run copy:wasm:release && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "build then preview": "npm run build && npm run preview",
-    "build wasm debug": "cmake --preset emscripten-debug && cmake --build --target Quoridor --preset emscripten-debug",
-    "build wasm release": "cmake --preset emscripten-release && cmake --build --target Quoridor --preset emscripten-release",
-    "create directories": "mkdir -p src/wasm public",
-    "copy wasm debug": "npm run 'create directories' && cp ./build/cmake-build-emscripten-debug/Quoridor.js ./src/wasm && cp ./build/cmake-build-emscripten-debug/Quoridor.wasm ./src/wasm && cp ./build/cmake-build-emscripten-debug/Quoridor.wasm ./public",
-    "copy wasm release": "npm run 'create directories' && cp ./build/cmake-build-emscripten-release/Quoridor.js ./src/wasm && cp ./build/cmake-build-emscripten-release/Quoridor.wasm ./src/wasm && cp ./build/cmake-build-emscripten-release/Quoridor.wasm ./public"
+
+    "build:wasm:debug":   "cmake --preset emscripten-debug && cmake --build --target Quoridor --preset emscripten-debug",
+    "build:wasm:release": "cmake --preset emscripten-release && cmake --build --target Quoridor --preset emscripten-release",
+
+    "copy:wasm:debug":    "shx mkdir -p src/wasm public && shx cp build/cmake-build-emscripten-debug/Quoridor.js src/wasm/ && shx cp build/cmake-build-emscripten-debug/Quoridor.wasm src/wasm/ && shx cp build/cmake-build-emscripten-debug/Quoridor.wasm public",
+    "copy:wasm:release":  "shx mkdir -p src/wasm public && shx cp build/cmake-build-emscripten-release/Quoridor.js src/wasm/ && shx cp build/cmake-build-emscripten-release/Quoridor.wasm src/wasm/ && shx cp build/cmake-build-emscripten-release/Quoridor.wasm public"
   },
   "dependencies": {
     "react": "^18.3.1",
