@@ -7,7 +7,7 @@
     "build": "npm run build:wasm:release && npm run copy:wasm:release && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build then preview": "npm run build && npm run preview",
+    "build:then:preview": "npm run build && npm run preview",
 
     "build:wasm:debug":   "cmake --preset emscripten-debug && cmake --build --target Quoridor --preset emscripten-debug",
     "build:wasm:release": "cmake --preset emscripten-release && cmake --build --target Quoridor --preset emscripten-release",
