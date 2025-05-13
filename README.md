@@ -13,7 +13,7 @@ Play now: [https://quoridor.dev](https://quoridor.dev).
 * **WebAssembly** build via Emscripten for near-native performance in the browser
 * **React + TypeScript** frontend built with Vite for fast iteration
 * **Web Worker** to offload AI computations without blocking the UI
-* **CI/CD** pipeline using GitHub Actions and deployment to GitHub Pages
+* **Build pipeline** using GitHub Actions and deployment to GitHub Pages
 
 ---
 
