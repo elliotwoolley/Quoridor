@@ -3,6 +3,7 @@
   "configurePresets": [
     {
       "name": "base",
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/cmake-build-${presetName}",
       "hidden": true
     },
